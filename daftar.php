@@ -1,17 +1,3 @@
-<!-- <?php
-//menyertakan file program koneksi.php pada register
-require('koneksi.php');
-
-//inisialisasi session
-session_start();
-
-//mengecek apakah form registrasi di submit atau tidak
-$nama_user = $_POST['nama_user'];
-$email     = $_POST['email'];
-$password  = $_POST['password'];
-$password  = $_POST['password'];
- 
-?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,25 +30,29 @@ $password  = $_POST['password'];
 
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h4>Register</h4>
+                            <!-- <div class="card-header"> -->
+                                <!-- <div class="section-header-back">
+                                    <a href="index.php" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+                                </div> -->
+                                <div class="section-header-back">
+                                <h4>Register</h4>                     
                             </div>
 
                             <div class="card-body">
-                                <form method="POST">
+                            <form action="" method="POST">
                                     <div class="row">
-                                        <div class="form-group col-6">
-                                            <label for="name_user">Username</label>
-                                            <input id="name_user" type="text" class="form-control" name="name_user" autofocus>
+                                        <div class="form-group col-12">
+                                            <label for="username">Username</label>
+                                            <input id="username" type="text" name="username" class="form-control" name="username" required>
                                         </div>
-                                        <div class="form-group col-6">
+                                        <div class="form-group col-12">
                                             <label for="name">Nama Lengkap</label>
-                                            <input id="name" type="text" class="form-control" name="name">
+                                            <input id="name" type="text" name="name" class="form-control" name="name"required>
                                         </div>
-                                    </div>
 
                                     <div class="form-group">
                                         <label for="email">Email</label>
-                                        <input id="email" type="email" class="form-control" name="email">
+                                        <input id="email" type="email" name="email" class="form-control" name="email" required>
                                         <div class="invalid-feedback">
                                         </div>
                                     </div>
@@ -70,7 +60,7 @@ $password  = $_POST['password'];
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="password" class="d-block">Password</label>
-                                            <input id="password" type="password" class="form-control pwstrength" data-indicator="pwindicator" name="password">
+                                            <input id="password" type="password" name="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" required>
                                             <div id="pwindicator" class="pwindicator">
                                                 <div class="bar"></div>
                                                 <div class="label"></div>
@@ -78,12 +68,12 @@ $password  = $_POST['password'];
                                         </div>
                                         <div class="form-group col-6">
                                             <label for="password2" class="d-block">Password Confirmation</label>
-                                            <input id="password2" type="password" class="form-control" name="password-confirm">
+                                            <input id="password2" type="password" class="form-control" name="password-confirm" required>
                                         </div>
                                     
                                     <div class="form-group col-6">
                                         <label for="alamat">Alamat</label>
-                                        <input id="alamat" type="alamat" class="form-control" name="alamat">
+                                        <input id="alamat" type="text" name="alamat" class="form-control" required>
                                         <div id="pwindicator" class="pwindicator">
                                                 <div class="bar"></div>
                                                 <div class="label"></div>
@@ -92,94 +82,45 @@ $password  = $_POST['password'];
 
                                     <div class="form-group col-6">
                                         <label for="no_hp">No. Hp</label>
-                                        <input id="no_hp" type="no_hp" class="form-control" name="no_hp">
-                                       
+                                        <input id="no_hp" type="number" name="no_hp" class="form-control" required>
                                     </div>
-                                    </div>
-
-                                    <div class="form-divider"
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label>Level</label>
-                                            <select class="form-control selectric">
-                                                <option>Admin</option>
-                                                <option>Siswa</option>
-                                            </select>
-                                        </div>
-                                        <!-- <div class="form-group col-6">
-                                            <label>Province</label>
-                                            <select class="form-control selectric">
-                                                <option>West Java</option>
-                                                <option>East Java</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label>City</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label>Postal Code</label>
-                                            <input type="text" class="form-control">
-                                        </div>
-                                    </div> -->
-
+                                
                                     <div class="form-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" name="agree" class="custom-control-input" id="agree">
-                                            <label class="custom-control-label" for="agree">I agree with the terms and conditions</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                        <button type="submit" name="register" class="btn btn-primary btn-lg btn-block">
                                             Register
                                         </button>
                                     </div>
                                     </div>
                                     <p class="btn-right">Anda sudah punya akun? <a href="index.php">Login </a></p>
-                                    <?php
-                                    if (isset($_POST['submit'])) {
-                                        $nama_user = $_POST['nama_user'];
+                                </form>
+                                <?php
+                                require 'koneksi.php';
+                                    if (isset($_POST['register'])) {
+                                        $username = $_POST['username'];
                                         $email = $_POST['email'];
                                         $password = md5($_POST['password']);
-                                        $level = $_POST['level'];
-                                        $nama_lengkap = $_POST['nama_lengkap'];
-                                        $alamat = ($_POST['alamat']);
-                                        $no_hp = ($_POST['no_hp']);
+                                        $repass = md5($_POST['password-confirm']);
+                                        $level = "siswa";
+                                        $name = $_POST['name'];
+                                        $alamat = $_POST['alamat'];
+                                        $hp = $_POST['no_hp'];
                                     
-                                        if ($password == $cpassword) {
-                                            $sql = "SELECT * FROM tb_user WHERE email='$email'";
-                                            $result = mysqli_query($koneksi, $sql);
-                                            if (!$result->num_rows > 0) {
-                                                $sql = "INSERT INTO tb_user (username, password, nama_lengkap, email, alamat, no_hp)
-                                                        VALUES ('$nama_user','$email', '$password','$level','$nama_lengkap','$alamat','$no_hp' )";
-                                                $result = mysqli_query($koneksi, $sql);
-                                                if ($result) {
-                                                    echo "<script>alert('Selamat, registrasi berhasil!')</script>";
-                                                    $nama_user= "";
-                                                    $email = "";
-                                                    $_POST['password'] = "";
-                                                    $level = "";
-                                                    $nama_lengkap = "";
-                                                    $alamat = "";
-                                                    $no_hp = "";
-                                                } else {
-                                                    echo "<script>alert('Woops! Terjadi kesalahan.')</script>";
-                                                }
-                                            } else {
-                                                echo "<script>alert('Woops! Email Sudah Terdaftar.')</script>";
-                                            }
-                                            
-                                        } else {
-                                            echo "<script>alert('Password Tidak Sesuai')</script>";
+                                        // menyiapkan query
+                                    $ambil = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE email_user='$email'");
+                                    $yangcocok = $ambil->num_rows;
+                                    if ($repass != $password) {
+                                        echo "<script>alert('Password tidak sama');</script>";
+                                        echo "<script>location='daftar.php';</script>";
+                                    } elseif ($yangcocok == 1) {
+                                        echo "<script>alert('Pendaftaran Gagal, Email Sudah Terdaftar');</script>";
+                                        echo "<script>location='daftar.php';</script>";
+                                    } else {
+                                        $query = mysqli_query($koneksi, "INSERT INTO tb_user VALUES(null,'$username','$email','$password','$level','$name','$alamat','$hp')");
+                                            echo "<script>alert('Registrasi Berhasil, Silahkan Login');window.location='daftar.php';</script>";
+                                            echo "<script>location='index.php';</script>";
                                         }
                                     }
-                                    
                                     ?>
-                                </form>
                             </div>
                         </div>
                         <div class="simple-footer">

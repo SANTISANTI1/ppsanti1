@@ -4,7 +4,7 @@
 body {
   width: 100vw;
   height: 100vh;
-  background-color: #e0e0e0;
+  background-image: url('../img/bg-anak.jpg');
   overflow: hidden;
   font-size: 12px;
 }
@@ -17,7 +17,7 @@ body {
   text-decoration: none;
   font-family: 'Gill Sans', sans-serif;
   font-size: 12px;
-  color: #969696;
+  color: #828282;
 }
 .inspiration img {
   width: 60px;

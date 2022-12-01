@@ -22,6 +22,7 @@
   ?>
 
   <!-- partial:index.partial.html -->
+  
   <div class="center">
     <div class="ear ear--left"></div>
     <div class="ear ear--right"></div>

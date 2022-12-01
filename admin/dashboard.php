@@ -13,6 +13,8 @@ include('template/sidebar.php');
         </div>
 
         <div class="section-body">
+            <h1> Selamat Datang, Admin </h1>
+        <img alt="image" src="../assets/img/gunung.jpg">
         </div>
     </section>
 </div>
