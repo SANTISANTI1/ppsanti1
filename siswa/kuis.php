@@ -9,7 +9,7 @@ include('template/navbar.php');
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Metode Pembelajaran Melalui Video</h1>
+            <h1>Metode Pembelajaran Melalui Kuis</h1>
         </div>
         <!-- <div class="col-12 ">
             <article class="article article-style-c">
