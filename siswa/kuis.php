@@ -120,7 +120,7 @@ if (isset($_POST['finish'])) {
     $nl = $benar * 100 / $total_soal;
     $hasil = mysqli_query($koneksi, "INSERT INTO tb_nilai (id_nilai, id_siswa, benar, salah, kosong, hasil) VALUES (null,'$id_siswa', '$benar', '$salah', '$kosong', '$nl')");
     if ($hasil) {
-        echo "<script>alert('Selamat Anda Telah Menyelesaikan Kuis');window.location='dashboard.php'</script>";
+        echo "<script>alert('Selamat Anda Telah Menyelesaikan Kuis');window.location='kuis.php'</script>";
     }
 }
 
@@ -129,3 +129,4 @@ include('template/footer.php');
 ?>  
 
                             
+
