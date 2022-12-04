@@ -1,157 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>Register &mdash; Stisla</title>
+include('template/header.php');
+include('template/navbar.php');
+include('template/sidebar.php');
 
-    <!-- General CSS Files -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+                    $id = $_SESSION['id'];
+                        if (isset($_POST['ubah'])) {
+                            $id = $_SESSION['id'];
+                            $username   = $_POST['username'];
+                            $name       = $_POST['name'];
+                            $email      = $_POST['email'];
+                            $umur       = $_POST['umur'];
+                            $alamat = $_POST['alamat'];
+                            $no_hp = $_POST['no_hp'];
+                            
+                            $query = mysqli_query($koneksi, "UPDATE tb_user SET nama_user = '$username', email_user = '$email', nama_lengkap = '$name', umur = '$umur', alamat = '$alamat', no_hp = '$no_hp' WHERE id_user = '$id'");
+                        
+                            if ($query) {
+                                echo "<script>alert('Data berhasil diubah');window.location='profil.php'</script>";
+                            } else {
+                                echo "<script>alert('Data gagal diubah');window.location='profil.php'</script>";
+                            }
+                        }
+                        
+                        if (isset($_POST['pass'])) {
+                            $id = $_SESSION['id'];
+                            $pass = md5($_POST['pass_lama']);
+                            $pass_baru = md5($_POST['pass_baru']);
+                            $pass_confirm = md5($_POST['pass_confirm']);
+                            
+                            $cek = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE id_user = '$id'");
+                            $data_cek = mysqli_fetch_array($cek);
+                        
+                            if ($pass != $data_cek['password_user']) {
+                                echo "<script>alert('Katasandi lama salah');window.location='profil.php'</script>";
+                            } else if ($pass_baru != $pass_confirm) {
+                                echo "<script>alert('Katasandi baru tidak sama');window.location='profil.php'</script>";
+                            } else {
+                                $query = mysqli_query($koneksi, "UPDATE tb_USER SET password_user = '$pass_baru' WHERE id_user = '$id'");
+                                echo "<script>alert('Katasandi berhasil diubah');window.location='profil.php'</script>";
+                            }
+                        }
 
-    <!-- CSS Libraries -->
-    <link rel="stylesheet" href="node_modules/selectric/public/selectric.css">
-
-    <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
-</head>
-
-<body>
-    <div id="app">
+?>
+<!-- Main Content -->
+<div class="main-content">
         <section class="section">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
-                        <div class="login-brand">
-                            <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
-                        </div>
+          <div class="section-header">
+            <h1>Profile</h1>
+          
+            <div class="section-header-breadcrumb">
+              <div class="breadcrumb-item active"><a href="dashboard.php">Dashboard</a></div>
+              <div class="breadcrumb-item">Profile</div>
+            </div>
+          </div>
+          <div class="section-body">
+            <h2 class="section-title">Hi, <?php echo $_SESSION['nama']; ?></div>
+            <p class="section-lead">
+              Change information about yourself on this page.
+            </p>
 
-                        <div class="card card-primary">
-                            <div class="card-header">
-                            <div class="section-header-back">
-                            <a href="../index.php" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
-                                <h4>Admin</h4>
+                
+                <div class="card>
+                  <form action="" method="POST">
+                    <div class="card-header">
+                    <div class="section-header">
+                      <h4>Edit Profile</h4>
+                    </div>
+                        <form action="" method="POST">
+                            <?php
+                            
+                             $query = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE id_user = '$id'");
+                             while ($data = mysqli_fetch_array($query)){
+                            ?>
+
+                    <div class="card-body">
+                        <div class="row">
+                          <div class="form-group col-md-6 col-12">
+                            <label>Username</label>
+                            <input type="text" name="username" value="<?= $data['nama_user'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the username
                             </div>
-
-                            <div class="card-body">
-                            <form action="" method="POST">
-                                    <div class="row">
-                                        <div class="form-group col-12">
-                                            <label for="username">Username</label>
-                                            <input id="username" type="text" name="username" class="form-control" name="username" required>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="umur">Umur</label>
-                                            <input id="umur" type="text" name="umur" class="form-control" name="umur" required>
-                                        </div>
-                                        <div class="form-group col-12">
-                                            <label for="name">Nama Lengkap</label>
-                                            <input id="name" type="text" name="name" class="form-control" name="name"required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email">Email</label>
-                                        <input id="email" type="email" name="email" class="form-control" name="email" required>
-                                        <div class="invalid-feedback">
-                                        </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="form-group col-6">
-                                            <label for="password" class="d-block">Password</label>
-                                            <input id="password" type="password" name="password" class="form-control pwstrength" data-indicator="pwindicator" name="password" required>
-                                            <div id="pwindicator" class="pwindicator">
-                                                <div class="bar"></div>
-                                                <div class="label"></div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label for="password2" class="d-block">Password Confirmation</label>
-                                            <input id="password2" type="password" class="form-control" name="password-confirm" required>
-                                        </div>
-                                    
-                                    <div class="form-group col-6">
-                                        <label for="alamat">Alamat</label>
-                                        <input id="alamat" type="text" name="alamat" class="form-control" required>
-                                        <div id="pwindicator" class="pwindicator">
-                                                <div class="bar"></div>
-                                                <div class="label"></div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group col-6">
-                                        <label for="no_hp">No. Hp</label>
-                                        <input id="no_hp" type="number" name="no_hp" class="form-control" required>
-                                    </div>
-                                
-                                    <div class="form-group">
-                                        <button type="submit" name="tambah" class="btn btn-primary btn-lg btn-block">
-                                            Tambah
-                                        </button>
-                                    </div>
-                                    </div>
-                                    <p class="btn-right"><a href="dashboard.php"> Dashboard </a></p>
-                                </form>
-                                <?php
-                                require '../koneksi.php';
-                                    if (isset($_POST['tambah'])) {
-                                        $username       = $_POST['username'];
-                                        $email          = $_POST['email'];
-                                        $password       = md5($_POST['password']);
-                                        $repass         = md5($_POST['password-confirm']);
-                                        $level          = "admin";
-                                        $name           = $_POST['name'];
-                                        $umur           = $_POST['umur'];
-                                        $alamat         = $_POST['alamat'];
-                                        $hp             = $_POST['no_hp'];
-                                    
-                                        // menyiapkan query
-                                    $ambil = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE email_user='$email'");
-                                    $yangcocok = $ambil->num_rows;
-                                    if ($repass != $password) {
-                                        echo "<script>alert('Password tidak sama');</script>";
-                                        echo "<script>location='tambah_admin.php';</script>";
-                                    } elseif ($yangcocok == 1) {
-                                        echo "<script>alert('Pendaftaran Gagal, Email Sudah Terdaftar');</script>";
-                                        echo "<script>location='tambah_admin.php';</script>";
-                                    } else {
-                                        $query = mysqli_query($koneksi, "INSERT INTO tb_user VALUES(null,'$username','$email','$password','$level','$name','$umur','$alamat','$hp')");
-                                            echo "<script>alert('Registrasi Berhasil, Silahkan Login');window.location='tambah_admin.php';</script>";
-                                            echo "<script>location='../index.php';</script>";
-                                        }
-                                    }
-                                    ?>
+                          </div>
+                          <div class="form-group col-md-6 col-12">
+                            <label>Email</label>
+                            <input type="email" name="email" value="<?= $data['email_user'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the email
                             </div>
+                          </div>
                         </div>
-                        <div class="simple-footer">
-                            Copyright &copy; Stisla 2018
+                        <div class="row">
+                          <div class="form-group col-12">
+                            <label>Nama Lengkap</label>
+                            <input type="text" name="name" value="<?= $data['nama_lengkap'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the nama lengkap
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-12">
+                            <label>Umur</label>
+                            <input type="text" name="umur" value="<?= $data['umur'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the nama lengkap
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="form-group col-md-6 col-12">
+                            <label>Alamat</label>
+                            <input type="text" name="alamat" value="<?= $data['alamat'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the alamat
+                            </div>
+                          </div>
+                          <div class="form-group col-md-6 col-12">
+                            <label>No. HP</label>
+                            <input type="number" name="no_hp" value="<?= $data['no_hp'] ?>" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the no hp
+                            </div>
+                          </div>
                         </div>
                     </div>
+                    <div class="card-footer text-right">
+                      <button class="btn btn-primary" type="submit" name="ubah">Save Changes</button>
+                    </div>
+                    </div>
+                    <div class="card-header">
+                    <div class="section-header">
+                      <h4>Edit Password</h4>
+                    </div>
+                            <div class="form-group col-md-6 col-12">
+                            <label>Password Lama</label>
+                                <input type="password" name="pass_lama" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the alamat
+                            </div>
+                          </div>
+                          <div class="form-group col-md-6 col-12">
+                            <label>Password Baru</label>
+                            <input type="password" name="pass_baru" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the no hp
+                            </div>
+                          </div>
+                            <div class="form-group col-md-6 col-12">
+                            <label>Ulangi Password</label>
+                            <input type="password" name="pass_confirm" class="form-control">
+                            <div class="invalid-feedback">
+                              Please fill in the no hp
+                            </div>
+                            </div>
+                             </div>
+                          <div class="card-footer text-right">
+                            <button class="btn btn-primary" type="submit" name="pass">Save Changes</button>
+                          </div>
+                        </div>
+                     </div>
+                </div> 
                 </div>
+                <?php } ?>
+            </form>
+         </div>
+    </div> 
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 
-    <!-- General JS Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="assets/js/stisla.js"></script>
+<?php
 
-    <!-- JS Libraies -->
-    <script src="node_modules/jquery-pwstrength/jquery.pwstrength.min.js"></script>
-    <script src="node_modules/selectric/public/jquery.selectric.min.js"></script>
+include('template/footer.php');
 
-    <!-- Template JS File -->
-    <script src="assets/js/scripts.js"></script>
-    <script src="assets/js/custom.js"></script>
-
-    <!-- Page Specific JS File -->
-    <script src="assets/js/page/auth-register.js"></script>
-</body>
-</html>
+?>
