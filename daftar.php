@@ -61,7 +61,7 @@
                                         <div class="invalid-feedback">
                                         </div>
                                     </div>
-
+                                    </div>
                                     <div class="row">
                                         <div class="form-group col-6">
                                             <label for="password" class="d-block">Password</label>
