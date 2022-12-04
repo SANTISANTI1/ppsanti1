@@ -96,7 +96,7 @@ include('template/sidebar.php');
                             $c       = $_POST['jawab_c'];
                             $jawaban = $_POST['jawaban'];
 
-                            $query = mysqli_query($koneksi, "UPDATE tb_kuis SET soal_kuis = '$soal', jawab_a = '$a', jawab_b = '$b',jawab_c = '$c',jawaban = '$jawaban' WHERE id_kuis = '$id'");
+                            $query = mysqli_query($koneksi, "UPDATE tb_kuis SET no='$no',soal_kuis = '$soal', jawab_a = '$a', jawab_b = '$b',jawab_c = '$c',jawaban = '$jawaban' WHERE id_kuis = '$id'");
 
                             if ($query) {
                                 echo "<script>alert('Data berhasil diubah');window.location='kuis.php'</script>";
