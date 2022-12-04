@@ -41,10 +41,15 @@
                             <div class="card-body">
                             <form action="" method="POST">
                                     <div class="row">
-                                        <div class="form-group col-12">
+                                        <div class="form-group col-6">
                                             <label for="username">Username</label>
                                             <input id="username" type="text" name="username" class="form-control" name="username" required>
                                         </div>
+                                        <div class="form-group col-6">
+                                            <label for="umur">Umur</label>
+                                            <input id="umur" type="text" name="umur" class="form-control" name="umur" required>
+                                        </div>
+                                    
                                         <div class="form-group col-12">
                                             <label for="name">Nama Lengkap</label>
                                             <input id="name" type="text" name="name" class="form-control" name="name"required>
@@ -96,14 +101,15 @@
                                 <?php
                                 require 'koneksi.php';
                                     if (isset($_POST['register'])) {
-                                        $username = $_POST['username'];
-                                        $email = $_POST['email'];
-                                        $password = md5($_POST['password']);
-                                        $repass = md5($_POST['password-confirm']);
-                                        $level = "siswa";
-                                        $name = $_POST['name'];
-                                        $alamat = $_POST['alamat'];
-                                        $hp = $_POST['no_hp'];
+                                        $username       = $_POST['username'];
+                                        $email          = $_POST['email'];
+                                        $password       = md5($_POST['password']);
+                                        $repass         = md5($_POST['password-confirm']);
+                                        $level          = "siswa";
+                                        $name           = $_POST['name'];
+                                        $umur           = $_POST['umur'];
+                                        $alamat         = $_POST['alamat'];
+                                        $hp             = $_POST['no_hp'];
                                     
                                         // menyiapkan query
                                     $ambil = mysqli_query($koneksi, "SELECT * FROM tb_user WHERE email_user='$email'");
@@ -115,7 +121,7 @@
                                         echo "<script>alert('Pendaftaran Gagal, Email Sudah Terdaftar');</script>";
                                         echo "<script>location='daftar.php';</script>";
                                     } else {
-                                        $query = mysqli_query($koneksi, "INSERT INTO tb_user VALUES(null,'$username','$email','$password','$level','$name','$alamat','$hp')");
+                                        $query = mysqli_query($koneksi, "INSERT INTO tb_user VALUES(null,'$username','$email','$password','$level','$name','$umur','$alamat','$hp')");
                                             echo "<script>alert('Registrasi Berhasil, Silahkan Login');window.location='daftar.php';</script>";
                                             echo "<script>location='index.php';</script>";
                                         }
