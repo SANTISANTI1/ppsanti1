@@ -47,13 +47,13 @@ include('template/sidebar.php');
                                     <tbody>
                                         <?php
                                         
-                                        $no = 1;
+                                        
                                         $kuis = mysqli_query($koneksi, "SELECT * From tb_kuis order by id_kuis DESC");
                                         while ($data = mysqli_fetch_array($kuis)) {
                                         ?>
                                             <tr>
                                                 <td class="text-center">
-                                                    <?= $no++; ?>
+                                                <?= $data['no']; ?>
                                                 </td>
                                                 <td><?= $data['soal_kuis']; ?></td>
                                                 <td><?= $data['jawab_a'] ?></td>
