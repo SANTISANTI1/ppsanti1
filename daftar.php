@@ -55,7 +55,7 @@
                                             <input id="name" type="text" name="name" class="form-control" name="name"required>
                                         </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group col-12">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" name="email" class="form-control" name="email" required>
                                         <div class="invalid-feedback">
