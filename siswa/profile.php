@@ -37,7 +37,7 @@ include('template/navbar.php');
                             } else if ($pass_baru != $pass_confirm) {
                                 echo "<script>alert('Katasandi baru tidak sama');window.location='profile.php'</script>";
                             } else {
-                                $query = mysqli_query($koneksi, "UPDATE tb_USER SET password_user = '$pass_baru' WHERE id_user = '$id'");
+                                $query = mysqli_query($koneksi, "UPDATE tb_user SET password_user = '$pass_baru' WHERE id_user = '$id'");
                                 echo "<script>alert('Katasandi berhasil diubah');window.location='profile.php'</script>";
                             }
                         }
